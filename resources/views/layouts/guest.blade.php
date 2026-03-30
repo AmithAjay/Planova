@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-slate-800 antialiased bg-slate-50 relative overflow-hidden">
+    <body class="font-sans text-slate-800 antialiased bg-slate-50 relative overflow-x-hidden">
         
         <!-- Decorative Background -->
         <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-100/60 blur-3xl pointer-events-none z-0"></div>

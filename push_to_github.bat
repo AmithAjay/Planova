@@ -1,0 +1,9 @@
+@echo off
+echo Adding changes to git...
+git add .
+echo Committing changes...
+git commit -m "Auto update from Planova"
+echo Pushing to GitHub...
+git push origin main
+echo Done!
+pause
