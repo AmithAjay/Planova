@@ -31,6 +31,13 @@ Route::middleware('auth')->group(function () {
         }
         );
 
+        Route::get('/event-banner/{event}', function(\App\Models\Event $event) {
+            if (!$event->image_path) abort(404);
+            $path = storage_path('app/public/' . $event->image_path);
+            if (!file_exists($path)) abort(404);
+            return response()->file($path);
+        })->name('event.banner');
+
         // Super admin only: user management
         Route::middleware(['role:super_admin'])->group(function () {
             Route::post('/admin/users/{user}/approve', [\App\Http\Controllers\AdminController::class, 'approveAdmin'])->name('admin.users.approve');

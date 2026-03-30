@@ -10,7 +10,7 @@
         @if($event->image_path)
             <div class="relative h-64 md:h-96 w-full overflow-hidden group">
                 <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent z-10 transition-opacity group-hover:opacity-40"></div>
-                <img src="{{ asset('storage/' . $event->image_path) }}" 
+                <img src="{{ $event->banner_url }}" 
                      alt="{{ $event->title }}" 
                      class="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700 ease-out" />
                 <div class="absolute bottom-6 left-8 z-20">

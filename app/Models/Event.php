@@ -34,6 +34,15 @@ class Event extends Model
         'eligible_departments' => 'array',
     ];
 
+    public function getBannerUrlAttribute()
+    {
+        if (!$this->image_path) {
+            return null;
+        }
+
+        return route('event.banner', $this);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

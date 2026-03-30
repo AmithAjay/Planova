@@ -60,7 +60,7 @@
                     <!-- Image Wrapper -->
                     <div class="relative h-48 overflow-hidden">
                         @if($event->image_path)
-                            <img src="{{ asset('storage/' . $event->image_path) }}" 
+                            <img src="{{ $event->banner_url }}" 
                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                  alt="{{ $event->title }}">
                         @else
