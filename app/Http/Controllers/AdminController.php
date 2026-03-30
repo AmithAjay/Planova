@@ -51,6 +51,11 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('stats', 'chartData', 'pendingEvents', 'pendingAdmins', 'allUsers', 'search'));
     }
 
+    public function guidelines()
+    {
+        return view('admin.guidelines');
+    }
+
     public function approve(\App\Models\Event $event)
     {
         $event->update(['approval_status' => 'approved']);

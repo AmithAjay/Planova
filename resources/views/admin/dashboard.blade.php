@@ -235,7 +235,7 @@
                 </div>
 
                 <!-- Master Event List Card -->
-                <div class="relative bg-white/30 backdrop-blur-3xl border border-white/60 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,10,40,0.12)] p-10 overflow-hidden">
+                <div id="active-events" class="relative bg-white/30 backdrop-blur-3xl border border-white/60 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,10,40,0.12)] p-10 overflow-hidden">
                     <div class="absolute -top-32 -right-32 w-96 h-96 bg-blue-400/10 rounded-full blur-[100px] pointer-events-none"></div>
                     
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10 relative z-10">
@@ -352,32 +352,32 @@
                     <h3 class="text-sm font-black text-slate-400 uppercase tracking-[0.2em] mb-6 relative z-10">Toolkit</h3>
                     
                     <div class="grid grid-cols-2 gap-4 relative z-10">
-                        <button class="flex flex-col items-center justify-center gap-3 p-5 bg-white/60 backdrop-blur-sm border border-white/80 rounded-[1.5rem] shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(99,102,241,0.2)] hover:border-indigo-100 transition-all duration-300 group">
+                        <a href="{{ route('events.create') }}" class="flex flex-col items-center justify-center gap-3 p-5 bg-white/60 backdrop-blur-sm border border-white/80 rounded-[1.5rem] shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(99,102,241,0.2)] hover:border-indigo-100 transition-all duration-300 group">
                             <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-500 group-hover:bg-indigo-500 group-hover:text-white transition-colors duration-300 relative">
                                 <div class="absolute inset-0 rounded-full bg-indigo-500 blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
                                 <svg class="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                             </div>
                             <span class="text-[10px] font-bold text-slate-600 uppercase tracking-widest text-center">Upload Poster</span>
-                        </button>
+                        </a>
                         
-                        <button class="flex flex-col items-center justify-center gap-3 p-5 bg-white/60 backdrop-blur-sm border border-white/80 rounded-[1.5rem] shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(99,102,241,0.2)] hover:border-indigo-100 transition-all duration-300 group">
+                        <a href="{{ route('admin.guidelines') }}" class="flex flex-col items-center justify-center gap-3 p-5 bg-white/60 backdrop-blur-sm border border-white/80 rounded-[1.5rem] shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(99,102,241,0.2)] hover:border-indigo-100 transition-all duration-300 group">
                             <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-colors duration-300 relative">
                                 <div class="absolute inset-0 rounded-full bg-purple-500 blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
                                 <svg class="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                             </div>
                             <span class="text-[10px] font-bold text-slate-600 uppercase tracking-widest text-center">Add Rules</span>
-                        </button>
+                        </a>
                     </div>
 
                     <div class="mt-6 space-y-3 relative z-10">
-                        <a href="#" class="flex items-center justify-between p-4 bg-white/50 backdrop-blur-xl border border-white/80 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-100 transition-all group">
+                        <a href="#active-events" class="flex items-center justify-between p-4 bg-white/50 backdrop-blur-xl border border-white/80 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-100 transition-all group">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 rounded-lg bg-blue-100/50 text-blue-600 flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
                                 <span class="text-sm font-bold text-slate-700">Scheduling</span>
                             </div>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
-                        <a href="#" class="flex items-center justify-between p-4 bg-white/50 backdrop-blur-xl border border-white/80 rounded-2xl shadow-sm hover:shadow-md hover:blue-100 transition-all group">
+                        <a href="{{ route('admin.registrations') }}" class="flex items-center justify-between p-4 bg-white/50 backdrop-blur-xl border border-white/80 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-100 transition-all group">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 rounded-lg bg-blue-100/50 text-blue-600 flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div>
                                 <span class="text-sm font-bold text-slate-700">Participants</span>
@@ -396,7 +396,7 @@
                         </div>
                         <h4 class="text-lg font-bold mb-2">Faculty Guidelines</h4>
                         <p class="text-xs text-slate-400 font-medium leading-relaxed mb-6">Ensure all event parameters meet institutional safety & spatial requirements before protocol approval.</p>
-                        <button class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 transition-colors text-sm font-bold w-full backdrop-blur-sm">View Manual</button>
+                        <a href="{{ route('admin.guidelines') }}" class="block px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 transition-all active:scale-95 text-sm font-bold w-full backdrop-blur-sm text-center">View Manual</a>
                     </div>
                 </div>
 

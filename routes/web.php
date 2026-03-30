@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
             Route::get('/admin/registrations', [\App\Http\Controllers\RegistrationController::class, 'adminIndex'])->name('admin.registrations');
             Route::get('/admin/registrations/export', [\App\Http\Controllers\RegistrationController::class, 'export'])->name('admin.registrations.export');
+            Route::get('/admin/guidelines', [\App\Http\Controllers\AdminController::class, 'guidelines'])->name('admin.guidelines');
             Route::post('/admin/events/{event}/approve', [\App\Http\Controllers\AdminController::class, 'approve'])->name('admin.events.approve');
             Route::post('/admin/events/{event}/reject', [\App\Http\Controllers\AdminController::class, 'reject'])->name('admin.events.reject');
         }
