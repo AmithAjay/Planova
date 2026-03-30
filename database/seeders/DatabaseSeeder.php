@@ -15,28 +15,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        // 1. Create Default Users (Safe for Production)
+        User::create([
             'name' => 'Super Admin',
             'email' => 'super@admin.com',
             'password' => bcrypt('password'),
             'role' => 'super_admin',
         ]);
 
-        User::factory()->create([
+        User::create([
             'name' => 'Faculty Admin',
             'email' => 'admin@faculty.com',
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
 
-        User::factory()->create([
+        User::create([
             'name' => 'Student User',
             'email' => 'student@college.com',
             'password' => bcrypt('password'),
             'role' => 'student',
         ]);
+
+        // 2. Call other seeders
         $this->call(CategorySeeder::class);
         $this->call(DepartmentSeeder::class);
         $this->call(FacultySeeder::class);
