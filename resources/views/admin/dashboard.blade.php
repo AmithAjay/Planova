@@ -103,12 +103,23 @@
             <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-300/20 rounded-full blur-[80px] pointer-events-none"></div>
             <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-300/20 rounded-full blur-[80px] pointer-events-none"></div>
 
-            <div class="flex items-center justify-between mb-8 relative z-10">
-                <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">System Access Grid</h2>
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 relative z-10 gap-4">
+                <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight shrink-0">System Access Grid</h2>
+                
+                <!-- Advanced Search Console -->
+                <form action="{{ route('admin.dashboard') }}" method="GET" class="w-full sm:w-[450px] relative group">
+                    <input type="text" 
+                        name="search" 
+                        value="{{ request('search') }}" 
+                        placeholder="Search Identity by Name or Email..." 
+                        class="w-full bg-white/60 backdrop-blur-md border border-slate-200/50 rounded-2xl py-3 pl-12 pr-4 text-sm font-bold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all shadow-inner group-hover:shadow-md">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </form>
             </div>
             
             <div class="relative z-10 overflow-hidden rounded-[2rem] border border-white/60 bg-white/30 backdrop-blur-xl shadow-inner">
-                @php $allUsers = \App\Models\User::latest()->take(6)->get(); @endphp
                 <table class="min-w-full">
                     <thead class="bg-white/40 border-b border-white/50">
                         <tr>
@@ -118,18 +129,18 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/50">
-                        @foreach($allUsers as $u)
+                        @forelse($allUsers as $u)
                         <tr class="hover:bg-white/50 transition-colors duration-300 group">
                             <td class="px-8 py-5">
                                 <div class="flex items-center space-x-5">
-                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-white to-slate-100 flex items-center justify-center text-slate-700 font-bold border border-white shadow-[0_8px_16px_-6px_rgba(0,0,0,0.1)] shrink-0">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-white to-slate-100 flex items-center justify-center text-slate-700 font-bold border border-white shadow-[0_8px_16px_-6px_rgba(0,0,0,0.1)] shrink-0 group-hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.15)] transition-shadow">
                                         {{ substr($u->name, 0, 1) }}
                                     </div>
                                     <div>
                                         <div class="text-sm font-bold text-slate-800">{{ $u->name }}</div>
                                         <div class="flex items-center gap-2 mt-0.5">
                                             <div class="text-xs text-slate-500 font-medium">{{ $u->email }}</div>
-                                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{{ $u->department->name ?? 'No Dept' }}</span>
+                                            <span class="text-[9px] font-black text-white px-2 py-0.5 bg-slate-400 rounded-md uppercase tracking-tighter">{{ $u->department->name ?? 'No Dept' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -167,9 +178,26 @@
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="3" class="px-8 py-20 text-center">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 mb-4 shadow-inner">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    </div>
+                                    <p class="text-slate-500 font-bold">No identity matches found for "<span class="text-blue-500">{{ request('search') }}</span>"</p>
+                                    <a href="{{ route('admin.dashboard') }}" class="mt-4 text-xs font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 underline underline-offset-4">Reset Matrix Search</a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Pagination Grid -->
+            <div class="mt-6 px-4">
+                {{ $allUsers->links() }}
             </div>
         </div>
 

@@ -7,8 +7,10 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $stats = [
             'total_users'          => \App\Models\User::count(),
             'total_events'         => \App\Models\Event::count(),
@@ -35,7 +37,18 @@ class AdminController extends Controller
             ->latest()
             ->get();
 
-        return view('admin.dashboard', compact('stats', 'chartData', 'pendingEvents', 'pendingAdmins'));
+        $allUsersQuery = \App\Models\User::with('department')->latest();
+
+        if ($search) {
+            $allUsersQuery->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $allUsers = $allUsersQuery->paginate(10)->withQueryString();
+
+        return view('admin.dashboard', compact('stats', 'chartData', 'pendingEvents', 'pendingAdmins', 'allUsers', 'search'));
     }
 
     public function approve(\App\Models\Event $event)
