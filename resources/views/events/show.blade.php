@@ -7,40 +7,68 @@
     </div>
 
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-        @if($event->image_path)
-            <div class="relative h-64 md:h-96 w-full overflow-hidden group">
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent z-10 transition-opacity group-hover:opacity-40"></div>
-                <img src="{{ $event->banner_url }}" 
-                     alt="{{ $event->title }}" 
-                     class="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700 ease-out" />
-                <div class="absolute bottom-6 left-8 z-20">
-                     <span class="inline-flex items-center px-4 py-2 rounded-2xl text-xs font-bold bg-white/20 backdrop-blur-md text-white border border-white/30 uppercase tracking-widest shadow-lg">
-                        {{ $event->category->name ?? 'Uncategorized' }}
+        <!-- Clean Typography Header -->
+        <div class="px-10 py-12 bg-white border-b border-slate-50 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-slate-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-indigo-50 text-indigo-700 uppercase tracking-widest border border-indigo-100/50">
+                        {{ $event->category->name ?? 'Institutional Event' }}
                     </span>
+                    @if($event->approval_status === 'pending')
+                         <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-amber-50 text-amber-700 uppercase tracking-widest border border-amber-100/50">
+                             Pending Approval
+                         </span>
+                    @endif
                 </div>
+                <h1 class="text-5xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl">
+                    {{ $event->title }}
+                </h1>
             </div>
-        @else
-            <div class="h-40 bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <div class="z-10 text-white font-black text-2xl tracking-tight opacity-40 uppercase">{{ $event->category->name ?? 'Event Identity' }}</div>
+        </div>
+
             </div>
+        </div>
+
+        @if($event->image_path || $event->video_path)
+        <!-- Media Spotlight Section -->
+        <div class="px-10 py-8 bg-slate-50/30 border-b border-slate-100">
+            <div class="grid grid-cols-1 {{ $event->image_path && $event->video_path ? 'lg:grid-cols-2' : '' }} gap-8 items-center">
+                @if($event->image_path)
+                    <div class="relative group overflow-hidden rounded-[2rem] border-4 border-white shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+                        <img src="{{ Storage::url($event->image_path) }}" alt="{{ $event->title }}" class="w-full aspect-video object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                @endif
+
+                @if($event->video_path)
+                    <div class="relative group overflow-hidden rounded-[2rem] border-4 border-white shadow-2xl bg-slate-900 aspect-video flex items-center justify-center">
+                        <video controls class="w-full h-full object-contain">
+                            <source src="{{ Storage::url($event->video_path) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                @endif
+            </div>
+        </div>
         @endif
 
         <div class="md:flex">
             <!-- Left Info Panel -->
             <div class="md:w-2/3 p-8 border-b md:border-b-0 md:border-r border-gray-100">
-                <div class="flex items-center space-x-3 mb-4">
-                    @if(!$event->image_path)
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 uppercase tracking-wide">
-                            {{ $event->category->name ?? 'Uncategorized' }}
-                        </span>
-                    @endif
-                    @if($event->approval_status === 'pending')
-                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 uppercase tracking-wide">
-                             Pending Approval
-                         </span>
-                    @endif
+                <div class="flex items-center space-x-3 mb-4 md:hidden">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-indigo-50 text-indigo-700 uppercase tracking-widest border border-indigo-100">
+                        {{ $event->category->name ?? 'Uncategorized' }}
+                    </span>
                 </div>
+                @if($event->approval_status === 'pending')
+                    <div class="mb-4">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 uppercase tracking-wide border border-amber-100">
+                            Pending Approval
+                        </span>
+                    </div>
+                @endif
 
                 <h1 class="text-4xl font-black text-gray-900 mb-4">{{ $event->title }}</h1>
                 

@@ -68,16 +68,21 @@ class EventController extends Controller
         $validated['created_by'] = auth()->id();
         $validated['approval_status'] = auth()->user()->isStudent() ? 'pending' : 'approved';
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('events', 'public');
-            $validated['image_path'] = $path;
-        }
-
         if (isset($validated['custom_fields'])) {
             $validated['custom_fields'] = json_decode($validated['custom_fields'], true);
         }
 
         $event = Event::create($validated);
+
+        if ($request->hasFile('image')) {
+            $event->image_path = $request->file('image')->store('events/images', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            $event->video_path = $request->file('video')->store('events/videos', 'public');
+        }
+        
+        $event->save();
 
         // Sync Organizing Team
         $this->syncOrganizingTeam($event, $request);
@@ -134,15 +139,6 @@ class EventController extends Controller
         $validated = $request->validated();
         \Log::info('Validated Data:', $validated);
 
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if ($event->image_path) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($event->image_path);
-            }
-            $path = $request->file('image')->store('events', 'public');
-            $validated['image_path'] = $path;
-        }
-
         if (isset($validated['custom_fields'])) {
             $validated['custom_fields'] = json_decode($validated['custom_fields'], true);
         }
@@ -151,12 +147,26 @@ class EventController extends Controller
 
         $event->update($validated);
 
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($event->image_path) {
+                Storage::disk('public')->delete($event->image_path);
+            }
+            $event->image_path = $request->file('image')->store('events/images', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            // Delete old video if exists
+            if ($event->video_path) {
+                Storage::disk('public')->delete($event->video_path);
+            }
+            $event->video_path = $request->file('video')->store('events/videos', 'public');
+        }
+
+        $event->save();
+
         // Sync Organizing Team
         $this->syncOrganizingTeam($event, $request);
-
-        if ($request->ajax()) {
-            return response()->json(['success' => true, 'event' => $event]);
-        }
 
         return redirect()->route('events.show', $event)->with('success', 'Event updated successfully.');
     }
@@ -230,7 +240,10 @@ class EventController extends Controller
         $newEvent = $event->replicate();
         $newEvent->title = $newEvent->title . ' (Copy)';
         $newEvent->approval_status = 'pending';
-        $newEvent->is_published = false;
+        // For duplication, we don't copy the image_path or video_path to avoid confusion or we can keep it if desired. 
+        // User didn't specify so I'll null them for a fresh start.
+        $newEvent->image_path = null;
+        $newEvent->video_path = null;
         $newEvent->save();
 
         return redirect()->route('events.edit', $newEvent)->with('success', 'Event duplicated. Please update the details.');

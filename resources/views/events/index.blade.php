@@ -57,31 +57,34 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($events as $event)
                 <div class="bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col overflow-hidden relative group hover:-translate-y-1">
-                    <!-- Image Wrapper -->
-                    <div class="relative h-48 overflow-hidden">
+                    <!-- Event Image Header -->
+                    <div class="relative aspect-[16/9] overflow-hidden bg-slate-100">
                         @if($event->image_path)
-                            <img src="{{ $event->banner_url }}" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                                 alt="{{ $event->title }}">
+                            <img src="{{ Storage::url($event->image_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         @else
-                            <div class="w-full h-full bg-gradient-to-br from-indigo-50 to-blue-50 flex items-center justify-center">
-                                <svg class="w-12 h-12 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-50 to-blue-50">
+                                <svg class="w-12 h-12 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             </div>
                         @endif
-                        
-                        <!-- Status Overlays -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        @if($event->max_participants && $event->participants()->count() >= $event->max_participants)
-                            <div class="absolute top-4 right-4 bg-red-500/90 backdrop-blur-md text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">FULL</div>
-                        @elseif($event->approval_status === 'pending')
-                             <div class="absolute top-4 right-4 bg-amber-500/90 backdrop-blur-md text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg uppercase">Pending Approval</div>
-                        @endif
-                        
-                        <div class="absolute bottom-4 left-4">
-                            <span class="inline-flex items-center px-3 py-1 rounded-xl text-[10px] font-black bg-white/90 backdrop-blur-md text-indigo-700 border border-white/50 shadow-sm uppercase tracking-wider">
-                                {{ $event->category->name ?? 'Uncategorized' }}
+
+                        <!-- Floating Badges -->
+                        <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[9px] font-black bg-white/90 backdrop-blur-md text-indigo-600 border border-white shadow-sm uppercase tracking-widest">
+                                {{ $event->category->name ?? 'Event' }}
                             </span>
+                            @if($event->video_path)
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[9px] font-black bg-blue-600 text-white shadow-lg uppercase tracking-widest gap-1.5">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    Video
+                                </span>
+                            @endif
                         </div>
+
+                        @if($event->max_participants && $event->participants()->count() >= $event->max_participants)
+                            <div class="absolute top-4 right-4">
+                                <span class="text-white text-[9px] font-black uppercase tracking-widest bg-red-600 px-2.5 py-1 rounded-lg shadow-lg">Full</span>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="p-6 flex-grow">

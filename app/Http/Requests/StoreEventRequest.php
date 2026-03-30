@@ -23,7 +23,6 @@ class StoreEventRequest extends FormRequest
             'date' => 'required|date',
             'location' => 'required|string|max:255',
             'max_participants' => 'nullable|integer|min:1',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'ticket_price' => 'nullable|numeric|min:0',
             'event_type' => 'required|string|in:Online,Offline,Hybrid',
             'custom_fields' => 'nullable|string',
@@ -32,6 +31,8 @@ class StoreEventRequest extends FormRequest
             'is_open_to_all' => 'required|boolean',
             'eligible_departments' => 'nullable|array|required_if:is_open_to_all,false',
             'eligible_departments.*' => 'string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'video' => 'nullable|mimes:mp4,mov,ogg,qt|max:20480',
         ];
     }
 }

@@ -15,7 +15,6 @@ class Event extends Model
         'created_by',
         'approval_status',
         'max_participants',
-        'image_path',
         'ticket_price',
         'event_type',
         'custom_fields',
@@ -23,6 +22,8 @@ class Event extends Model
         'organizing_departments',
         'is_open_to_all',
         'eligible_departments',
+        'image_path',
+        'video_path',
     ];
 
     protected $casts = [
@@ -34,14 +35,7 @@ class Event extends Model
         'eligible_departments' => 'array',
     ];
 
-    public function getBannerUrlAttribute()
-    {
-        if (!$this->image_path) {
-            return null;
-        }
 
-        return route('event.banner', $this);
-    }
 
     public function category()
     {

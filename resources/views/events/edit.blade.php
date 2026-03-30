@@ -87,41 +87,7 @@
                             <input type="text" name="location" id="location" value="{{ old('location', $event->location) }}" placeholder="Main Auditorium" required class="w-full bg-white/80 backdrop-blur-md border border-slate-200/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-2xl px-6 py-4 focus:ring-4 focus:ring-indigo-500/15 focus:border-indigo-400 focus:bg-white transition-all outline-none text-slate-700 font-medium placeholder-slate-400">
                             @error('location') <p class="mt-2 text-sm text-red-500 font-medium pl-1 flex items-center gap-1"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>{{ $message }}</p> @enderror
                         </div>
-
-                        <!-- Antigravity File Upload Zone -->
-                        <div class="col-span-1 md:col-span-2 space-y-2 mt-2">
-                            <label class="block text-xs font-black text-slate-500 uppercase tracking-widest pl-1">Event Poster / Cover Image <span class="text-slate-400 font-medium normal-case tracking-normal">(Optional)</span></label>
-                            <div class="relative group/upload cursor-pointer border-2 border-dashed border-slate-300/50 hover:border-indigo-400 bg-white/40 hover:bg-white/60 backdrop-blur-md rounded-[2rem] p-10 transition-all duration-300 text-center overflow-hidden h-[250px] flex items-center justify-center">
-                                <div class="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-transparent opacity-0 group-hover/upload:opacity-100 transition-opacity duration-500"></div>
-                                <input type="file" name="image" id="image" @change="handleImageUpload" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" accept="image/*">
-                                
-                                <div class="relative z-10 flex flex-col items-center justify-center pointer-events-none" x-show="!imagePreview">
-                                    <div class="w-16 h-16 rounded-full bg-white shadow-[0_10px_20px_-5px_rgba(0,0,0,0.05)] border border-slate-100 flex items-center justify-center text-indigo-400 group-hover/upload:text-indigo-600 group-hover/upload:scale-110 group-hover/upload:shadow-[0_15px_30px_-5px_rgba(99,102,241,0.2)] transition-all duration-500 mb-4">
-                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                    </div>
-                                    <p class="text-base font-bold text-slate-700 group-hover/upload:text-indigo-700 transition-colors">Drag and drop your poster here</p>
-                                    <p class="text-sm font-medium text-slate-500 mt-1">or click to browse local files (JPEG, PNG, GIF, max 10MB)</p>
-                                </div>
-                                
-                                <div class="absolute inset-0 w-full h-full p-3 z-10 flex items-center justify-center bg-white/90 backdrop-blur-md" x-show="imagePreview">
-                                    <div class="relative w-full h-full flex items-center justify-center p-4">
-                                        <img :src="imagePreview" class="max-h-full max-w-full rounded-2xl object-contain shadow-lg border border-white/50" alt="Preview">
-                                        
-                                        <!-- Remove/Change button -->
-                                        <div class="absolute top-4 right-4 z-30">
-                                            <button type="button" @click="removeImage()" class="w-10 h-10 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg hover:bg-red-600 transition-all transform hover:scale-110 pointer-events-auto">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                            </button>
-                                        </div>
-
-                                        <div class="absolute bottom-6 left-0 right-0 text-center">
-                                            <span class="bg-slate-800/90 text-white text-xs font-bold px-4 py-2 rounded-full backdrop-blur-md inline-block shadow-xl border border-white/10" x-text="fileName || 'Current Poster'"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @error('image') <p class="mt-2 text-sm text-red-500 font-medium pl-1 flex items-center gap-1"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>{{ $message }}</p> @enderror
-                        </div>
+                    </div>
                     </div>
                 </section>
 
@@ -271,7 +237,98 @@
                     </div>
                 </section>
 
-                <!-- Section 3: Organizing Team -->
+                <!-- Section 3: Media Assets -->
+                <section class="bg-white/60 backdrop-blur-3xl border border-white/80 rounded-[2.5rem] p-8 lg:p-12 shadow-[0_20px_80px_-20px_rgba(0,0,0,0.05)] relative overflow-hidden group">
+                    <div class="absolute -top-32 -left-32 w-64 h-64 bg-gradient-to-br from-pink-200/40 to-rose-200/40 rounded-full blur-[80px] pointer-events-none group-hover:from-pink-300/40 group-hover:to-rose-300/40 transition-colors duration-700"></div>
+                    
+                    <div class="flex items-center gap-5 mb-10 relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 shadow-lg shadow-pink-500/30 flex items-center justify-center text-white font-extrabold text-xl">3</div>
+                        <div>
+                            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Media Assets</h2>
+                            <p class="text-sm font-medium text-slate-500 mt-0.5">Update cover image and promotional video.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
+                        <!-- Image Upload -->
+                        <div class="space-y-4" x-data="{ 
+                            preview: '{{ $event->image_path ? Storage::url($event->image_path) : '' }}',
+                            handleFile(e) {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => this.preview = e.target.result;
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+                        }">
+                            <label class="block text-xs font-black text-slate-500 uppercase tracking-widest pl-1">Event Cover Image <span class="text-slate-400 font-medium normal-case tracking-normal">(Max 5MB)</span></label>
+                            
+                            <div class="relative group/img">
+                                <div class="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-slate-200 shadow-xl group/preview" x-show="preview">
+                                    <img :src="preview" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-center justify-center">
+                                        <button type="button" @click="$refs.imageInput.click()" class="px-4 py-2 bg-white text-indigo-600 rounded-xl font-bold text-xs shadow-lg hover:bg-indigo-50 transition-colors">Change Image</button>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="!preview" @click="$refs.imageInput.click()" class="w-full aspect-video rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50/50 hover:bg-white hover:border-pink-400 transition-all cursor-pointer flex flex-col items-center justify-center gap-4 group/box">
+                                    <div class="w-14 h-14 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 group-hover/box:text-pink-500 group-hover/box:scale-110 transition-all duration-300">
+                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-sm font-black text-slate-700">Click to upload image</p>
+                                        <p class="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-widest">PNG, JPG or WebP</p>
+                                    </div>
+                                </div>
+                                
+                                <input type="file" name="image" x-ref="imageInput" @change="handleFile" accept="image/*" class="hidden">
+                            </div>
+                            @error('image') <p class="mt-2 text-sm text-red-500 font-medium pl-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <!-- Video Upload -->
+                        <div class="space-y-4" x-data="{ 
+                            videoName: '{{ $event->video_path ? 'Current Video Attached' : '' }}',
+                            handleFile(e) {
+                                const file = e.target.files[0];
+                                if (file) this.videoName = file.name;
+                            }
+                        }">
+                            <label class="block text-xs font-black text-slate-500 uppercase tracking-widest pl-1">Event Video <span class="text-slate-400 font-medium normal-case tracking-normal">(Max 20MB)</span></label>
+                            
+                            <div class="relative group/vid">
+                                <div class="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-slate-200 bg-slate-900 shadow-xl flex items-center justify-center p-8 text-center group/preview" x-show="videoName">
+                                    <div class="space-y-4">
+                                        <div class="w-16 h-16 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center mx-auto">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        </div>
+                                        <p class="text-blue-200 font-bold text-sm truncate max-w-xs" x-text="videoName"></p>
+                                        <button type="button" @click="$refs.videoInput.click()" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-xs shadow-lg backdrop-blur-md transition-colors border border-white/20">Replace Video</button>
+                                        @if($event->video_path)
+                                            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-2 italic">Current: {{ basename($event->video_path) }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                <div x-show="!videoName" @click="$refs.videoInput.click()" class="w-full aspect-video rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50/50 hover:bg-white hover:border-blue-400 transition-all cursor-pointer flex flex-col items-center justify-center gap-4 group/box">
+                                    <div class="w-14 h-14 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 group-hover/box:text-blue-500 group-hover/box:scale-110 transition-all duration-300">
+                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-sm font-black text-slate-700">Click to upload video</p>
+                                        <p class="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-widest">MP4 or MOV</p>
+                                    </div>
+                                </div>
+                                
+                                <input type="file" name="video" x-ref="videoInput" @change="handleFile" accept="video/*" class="hidden">
+                            </div>
+                            @error('video') <p class="mt-2 text-sm text-red-500 font-medium pl-1">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Organizing Team -->
                 @php
                     $headFacultyId = $event->team->where('pivot.role', 'head_faculty')->first()?->id ?? '';
                     $staffIds = $event->team->where('pivot.role', 'staff')->pluck('id')->map(fn($id) => (string)$id)->toArray();
@@ -504,7 +561,7 @@
                     </div>
                 </section>
 
-                <!-- Section 4: Registration Form Builder (Dynamic Alpine.js Component) -->
+                <!-- Section 5: Form Builder (Dynamic Alpine.js Component) -->
                 <section class="bg-white/60 backdrop-blur-3xl border border-white/80 rounded-[2.5rem] p-8 lg:p-12 shadow-[0_20px_80px_-20px_rgba(0,0,0,0.05)] relative overflow-visible group">
                     <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-br from-purple-200/40 to-pink-200/40 rounded-full blur-[80px] pointer-events-none group-hover:from-purple-300/40 group-hover:to-pink-300/40 transition-colors duration-700"></div>
 
@@ -513,7 +570,7 @@
 
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4 relative z-10">
                         <div class="flex items-center gap-5">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg shadow-purple-500/30 flex items-center justify-center text-white font-extrabold text-xl">4</div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg shadow-purple-500/30 flex items-center justify-center text-white font-extrabold text-xl">5</div>
                             <div>
                                 <h2 class="text-2xl font-black text-slate-900 tracking-tight">Form Builder <span class="text-[10px] uppercase font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 px-2 py-1 rounded-md ml-2 align-middle shadow-sm">Interactive</span></h2>
                                 <p class="text-sm font-medium text-slate-500 mt-0.5">Define data collection blocks dynamically.</p>
@@ -694,29 +751,8 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('eventForm', () => ({
-                imagePreview: '{{ $event->image_path ? Storage::url($event->image_path) : "" }}',
-                fileName: '',
                 isPublished: {{ $event->is_published ? 'true' : 'false' }},
                 fields: {!! json_encode($event->custom_fields ?? []) !!} || [],
-                
-                handleImageUpload(event) {
-                    const file = event.target.files[0];
-                    if (file) {
-                        this.fileName = file.name;
-                        this.imagePreview = URL.createObjectURL(file);
-                    } else {
-                        // Keep current image if no new file is selected but we have an old one
-                        this.imagePreview = '{{ $event->image_path ? Storage::url($event->image_path) : "" }}';
-                        this.fileName = '';
-                    }
-                },
-                
-                removeImage() {
-                    this.imagePreview = '';
-                    this.fileName = '';
-                    // Also clear the file input
-                    document.getElementById('image').value = '';
-                },
                 
                 addField() {
                     this.fields.push({
