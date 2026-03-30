@@ -1,0 +1,45 @@
+@startsalt
+{
+{T
+ + Planova/
+ ++ app/
+ +++ Models/
+ ++++ Category.php
+ ++++ Department.php
+ ++++ Event.php
+ ++++ Registration.php
+ ++++ User.php
+ +++ Http/
+ ++++ Controllers/
+ +++++ AdminController.php
+ +++++ Controller.php
+ +++++ DashboardController.php
+ +++++ EventController.php
+ +++++ NotificationController.php
+ +++++ PasswordResetController.php
+ +++++ ProfileController.php
+ +++++ RegistrationController.php
+ ++++ Middleware/
+ +++++ ...
+ ++ database/
+ +++ migrations/
+ +++ seeders/
+ ++ resources/
+ +++ views/
+ +++ css/
+ +++ js/
+ ++ public/
+ +++ images/
+ +++ css/
+ +++ js/
+ ++ routes/
+ +++ web.php
+ ++ storage/
+ ++ config/
+ ++ bootstrap/
+ ++ .env
+ ++ composer.json
+ ++ artisan
+}
+}
+@endsalt

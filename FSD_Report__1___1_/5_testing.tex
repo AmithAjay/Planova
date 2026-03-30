@@ -1,0 +1,178 @@
+\chapter{TESTING}
+Testing is a crucial part of web development, ensuring that the application runs smoothly, is secure, and provides a seamless experience for all users. Without proper testing, a web system may have security vulnerabilities, broken routing, or logic errors that frustrate users and compromise data integrity. It involves different types of testing, such as unit testing, integration testing, system testing, and performance testing.
+\noindent
+Unit testing checks individual components like database models, form validation, and controller logic to ensure they work correctly. Integration testing ensures that different system components, such as frontend forms, backend routing, and database queries, work together smoothly without errors. System testing evaluates the web application as a complete system across different browsers and devices. Performance testing ensures that the application runs efficiently under various server loads and concurrent user interactions.
+
+\section{Unit Testing}
+Unit testing focuses on testing individual components of the system, such as Eloquent models, validation rules, and specific controller methods, to ensure they function correctly. For example, unit tests verify if a student's capacity limit logic triggers properly or if a new event is saved to the database accurately. By implementing unit testing, developers maintain a stable, bug-free web application.
+
+\renewcommand{\arraystretch}{1.3}
+
+\begin{longtable}{|p{1.5cm}|p{2.5cm}|p{4cm}|p{4cm}|c|}
+    
+    \hline
+    \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+    \hline
+    \endfirsthead
+
+    \hline
+    \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+    \hline
+    \endhead
+
+    \hline
+    
+    \endfoot
+
+    \hline
+    \caption{Unit Test Cases for College Event Management System} \label{tab:unit_tests} \\
+    \endlastfoot
+
+    UT01 & User Authentication & \raggedright Verify that a user cannot log in with incorrect credentials & \raggedright System rejects login and shows error & Pass \\
+    \hline
+    UT02 & Form Validation & \raggedright Ensure empty required fields are caught during event creation & \raggedright Form submission is prevented; validation errors display & Pass \\
+    \hline
+    UT03 & Capacity Logic & \raggedright Verify registration is blocked if \texttt{max\_participants} is reached & \raggedright Registration fails; "Event Full" message appears & Pass \\
+    \hline
+    UT04 & Duplicate Check & \raggedright Validate that a student cannot RSVP to the same event twice & \raggedright System prevents duplicate entry in database & Pass \\
+    \hline
+    UT05 & Role Middleware & \raggedright Attempt to access Admin dashboard as a Student & \raggedright Access is denied; redirected to Student portal & Pass \\
+    \hline
+    UT06 & Event Approval & \raggedright Check if an Admin can change event status from 'pending' to 'approved' & \raggedright Status updates successfully in the database & Pass \\
+    \hline
+    UT07 & Database Relations & \raggedright Verify that a created event correctly attaches to the creator's \texttt{user\_id} & \raggedright Event is linked to the correct Admin/Faculty & Pass \\
+    \hline
+    UT08 & Data Sanitization & \raggedright Ensure HTML/JS scripts entered into forms are neutralized & \raggedright Input is sanitized; XSS attacks prevented & Pass \\
+    \end{longtable}
+
+\newpage
+\section{Integration Testing}
+Integration testing ensures that different application components interact correctly with each other without errors. It checks whether the backend logic, database, middleware, and frontend views work seamlessly as a unified system. For example, integration tests verify whether submitting an event proposal correctly updates the admin dashboard and whether filtering by categories updates the UI dynamically. 
+\FloatBarrier % Prevents table from moving to the next page
+\vspace{-10pt} % Reduces extra space before the table
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \small
+    \begin{tabular}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        IT01 & View to Database & Verify if creating an event in the Admin UI reflects in the Student Portal & Event instantly appears for students once approved & Pass \\
+        \hline
+        IT02 & Registration to Capacity & Ensure that a successful RSVP decreases available event slots in real-time & Available capacity drops by 1 upon registration & Pass \\
+        \hline
+        IT03 & Auth to Routing & Ensure logging in correctly routes users based on their RBAC role & Admins go to Admin Panel; Students to Student Panel & Pass \\
+        \hline
+        IT04 & UI Error Handling & Check if backend validation failures correctly display Tailwind error alerts & Tailwind-styled error messages appear next to fields & Pass \\
+        \hline
+        IT05 & Category Filtering & Verify if selecting a specific event category dynamically filters the list & Only events matching the category are displayed & Pass \\
+        \hline
+        IT06 & Dashboard Analytics & Ensure student registrations correctly update the Admin analytics charts & Charts/counters update to reflect new registrants & Pass \\
+        \hline
+    \end{tabular}
+    \caption{Integration Test Cases for College Event Management System}
+    \label{tab:integration_tests}
+\end{table}
+
+\newpage
+\section{System Testing}
+System testing evaluates the entire application as a complete system to ensure that all modules work together correctly. It verifies the system's end-to-end functionality, performance, and user experience across different browsers and server environments.\\
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|p{4cm}|p{3cm}|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        ST01 & Application Launch & Verify that the Laravel application serves without 500 Server Errors & Application loads index page successfully & Pass \\
+        \hline
+        ST02 & Cross-Browser Compat. & Check if all UI elements render properly on Chrome, Firefox, and Safari & Tailwind layouts remain consistent & Pass \\
+        \hline
+        ST03 & Student Journey & Ensure a student can log in, view events, register, and log out & Full lifecycle completes without errors & Pass \\
+        \hline
+        ST04 & Admin Journey & Verify Admin can log in, review proposals, approve, and check analytics & Admin workflow executes seamlessly & Pass \\
+        \hline
+        ST05 & Database Integrity & Check system behavior under simultaneous student registrations & Database handles concurrent writes safely & Pass \\
+        \hline
+    \end{tabular}
+    \caption{System Test Cases for College Event Management System}
+    \label{tab:system_tests}
+\end{table}
+
+\newpage
+\section{Regression Testing}
+Regression testing ensures that recent changes, new code, or UI updates do not negatively affect the existing functionality of the application. It helps confirm that adding new features (like a new event category type) hasn't unintentionally broken previously working core features (like student registration).
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \small
+    \begin{tabular}{|c|c|p{3cm}|p{3cm}|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        RT01 & Login System & \raggedright Verify that updates to user models do not break the login flow & \raggedright Users can still authenticate successfully & Pass \\
+        \hline
+        RT02 & Event Schema & \raggedright Ensure adding new database columns doesn’t break existing event listings & \raggedright Events display properly on dashboards & Pass \\
+        \hline
+        RT03 & Middleware Security & \raggedright Check if routing logic updates inadvertently expose secure Admin pages & \raggedright Admin routes remain fully protected & Pass \\
+        \hline
+        RT04 & UI Responsiveness & \raggedright Test if Tailwind CSS additions break mobile scaling & \raggedright Interface continues to scale gracefully & Pass \\
+        \hline
+        RT05 & Registration Logic & \raggedright Validate that editing an event does not detach currently registered users & \raggedright Existing RSVPs remain attached accurately & Pass \\
+        \hline
+        RT06 & Session Handling & \raggedright Check if session timeouts still function after core updates & \raggedright Inactive sessions correctly log out users & Pass \\
+        \hline
+    \end{tabular}
+    \caption{Regression Test Cases for College Event Management System}
+    \label{tab:regression_tests}
+\end{table}
+
+\newpage
+\section{UI and Responsiveness Testing}
+UI and Responsiveness testing ensures that the aesthetic and interactive elements of the web application function correctly across various screen sizes and devices. This includes verifying that Tailwind CSS mobile classes collapse sidebars appropriately, form fields are accessible and readable, navigation menus stack, and micro-interactions (like button hover states or modal pop-ups) trigger accurately to give the user visual feedback.
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \small
+    \begin{tabular}{|c|c|p{3cm}|p{3cm}|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        UI01 & Mobile Layout & \raggedright Verify that the sidebar collapses into a hamburger menu on small screens & \raggedright UI adapts to mobile view cleanly & Pass \\
+        \hline
+        UI02 & Interactive States & \raggedright Check if buttons show visual feedback (hover/disabled) on interaction & \raggedright Colors and opacity change appropriately & Pass \\
+        \hline
+        UI03 & Form Accessibility & \raggedright Validate that inputs and labels scale correctly on mobile devices & \raggedright Text remains readable without horizontal scrolling & Pass \\
+        \hline
+        UI04 & Modal Pop-ups & \raggedright Ensure confirmation modals (e.g., Delete Event) overlay correctly & \raggedright Modal centers and greys out the background & Pass \\
+        \hline
+    \end{tabular}
+    \caption{UI and Responsiveness Test Cases for College Event Management System}
+    \label{tab:ui_media_tests}
+\end{table}
+
+\newpage
+\section{Performance Testing}
+Performance testing ensures that the web application runs smoothly and efficiently under different server and database conditions. It checks for page load times, Eloquent rendering speeds, memory usage, and endpoint responsiveness to ensure an optimal user experience. A well-performing application should handle multiple concurrent users without lag or database timeouts.\\
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|p{4cm}|p{3cm}|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        PT01 & Initial Page Load & Measure time taken to load Vite-compiled CSS and JS assets & Page loads efficiently under 2-3 seconds & Pass \\
+        \hline
+        PT02 & Query Performance & Check for the N+1 problem when fetching events with their categories & Queries run in acceptable milliseconds & Pass \\
+        \hline
+        PT03 & Server CPU/RAM & Monitor server usage during simulated high user traffic & Memory usage stays within safe thresholds & Pass \\
+        \hline
+        PT04 & Middleware Speed & Evaluate the response time of role checking on restricted routes & Redirection/Access granted instantaneously & Pass \\
+        \hline
+        PT05 & Concurrent RSVPs & Verify response time when multiple users attempt to register simultaneously & Lock mechanisms prevent lag and handle queue gracefully & Pass \\
+        \hline
+    \end{tabular}
+    \caption{Performance Test Cases for College Event Management System}
+    \label{tab:performance_tests}
+\end{table}
