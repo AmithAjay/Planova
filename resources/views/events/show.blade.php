@@ -6,14 +6,35 @@
         </a>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+        @if($event->image_path)
+            <div class="relative h-64 md:h-96 w-full overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent z-10 transition-opacity group-hover:opacity-40"></div>
+                <img src="{{ asset('storage/' . $event->image_path) }}" 
+                     alt="{{ $event->title }}" 
+                     class="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700 ease-out" />
+                <div class="absolute bottom-6 left-8 z-20">
+                     <span class="inline-flex items-center px-4 py-2 rounded-2xl text-xs font-bold bg-white/20 backdrop-blur-md text-white border border-white/30 uppercase tracking-widest shadow-lg">
+                        {{ $event->category->name ?? 'Uncategorized' }}
+                    </span>
+                </div>
+            </div>
+        @else
+            <div class="h-40 bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <div class="z-10 text-white font-black text-2xl tracking-tight opacity-40 uppercase">{{ $event->category->name ?? 'Event Identity' }}</div>
+            </div>
+        @endif
+
         <div class="md:flex">
             <!-- Left Info Panel -->
             <div class="md:w-2/3 p-8 border-b md:border-b-0 md:border-r border-gray-100">
                 <div class="flex items-center space-x-3 mb-4">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 uppercase tracking-wide">
-                        {{ $event->category->name ?? 'Uncategorized' }}
-                    </span>
+                    @if(!$event->image_path)
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 uppercase tracking-wide">
+                            {{ $event->category->name ?? 'Uncategorized' }}
+                        </span>
+                    @endif
                     @if($event->approval_status === 'pending')
                          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 uppercase tracking-wide">
                              Pending Approval

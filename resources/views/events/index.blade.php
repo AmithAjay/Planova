@@ -56,22 +56,37 @@
     @if($events->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($events as $event)
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col overflow-hidden relative group">
-                    @if($event->max_participants && $event->participants()->count() >= $event->max_participants)
-                        <div class="absolute top-4 right-4 bg-red-100 text-red-800 text-xs font-bold px-2.5 py-1 rounded-md">FULL</div>
-                    @elseif($event->approval_status === 'pending')
-                         <div class="absolute top-4 right-4 bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md">PENDING</div>
-                    @endif
-
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 mb-2">
+                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col overflow-hidden relative group hover:-translate-y-1">
+                    <!-- Image Wrapper -->
+                    <div class="relative h-48 overflow-hidden">
+                        @if($event->image_path)
+                            <img src="{{ asset('storage/' . $event->image_path) }}" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                 alt="{{ $event->title }}">
+                        @else
+                            <div class="w-full h-full bg-gradient-to-br from-indigo-50 to-blue-50 flex items-center justify-center">
+                                <svg class="w-12 h-12 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            </div>
+                        @endif
+                        
+                        <!-- Status Overlays -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        @if($event->max_participants && $event->participants()->count() >= $event->max_participants)
+                            <div class="absolute top-4 right-4 bg-red-500/90 backdrop-blur-md text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">FULL</div>
+                        @elseif($event->approval_status === 'pending')
+                             <div class="absolute top-4 right-4 bg-amber-500/90 backdrop-blur-md text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg uppercase">Pending Approval</div>
+                        @endif
+                        
+                        <div class="absolute bottom-4 left-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-xl text-[10px] font-black bg-white/90 backdrop-blur-md text-indigo-700 border border-white/50 shadow-sm uppercase tracking-wider">
                                 {{ $event->category->name ?? 'Uncategorized' }}
                             </span>
                         </div>
-                        
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $event->title }}</h3>
-                        <p class="text-gray-500 text-sm line-clamp-2 mb-4">{{ $event->description }}</p>
+                    </div>
+
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-extrabold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors leading-tight">{{ $event->title }}</h3>
+                        <p class="text-slate-500 text-sm line-clamp-2 mb-6 font-medium leading-relaxed">{{ $event->description }}</p>
 
                         <div class="space-y-2 mt-auto">
                             <div class="flex items-center text-sm text-gray-600">
