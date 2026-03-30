@@ -90,7 +90,7 @@
                             @else
                                 <a href="{{ route('login') }}" class="font-bold text-slate-600 hover:text-slate-900 transition">Log in</a>
                                 @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5">Get Started Free</a>
+                                    <a href="{{ route('register') }}" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5">Register</a>
                                 @endif
                             @endauth
                         </div>
